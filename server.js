@@ -13,19 +13,18 @@ const fruitSchema = new mongoose.Schema({
     review: String
 });
 
-
 const Fruit = mongoose.model('Fruit', fruitSchema);
 
 //  MongoDB will automatically pluralize the collection name
-const fruit = new Fruit({
-    name: 'Apple',
-    rating: 7,
-    review: 'Pretty solid as fruit!'
-});
+// const fruit = new Fruit({
+//     name: 'Apple',
+//     rating: 7,
+//     review: 'Pretty solid as fruit!'
+// });
 
 // Comment out this section to prevent mongoose to 
     // save fruit to fruits collection everytime you run server.js
-fruit.save();
+// fruit.save();
 
 const peopleSchema = new mongoose.Schema({
     name: String,
@@ -40,6 +39,12 @@ const people = new People({
 });
 
 people.save();
+
+const apple = new Fruit({
+    name: 'Apple',
+    rating: 7,
+    review: 'Pretty solid as fruit!'
+});
 
 const kiwi = new Fruit({
     name: 'Kiwi',
@@ -59,10 +64,19 @@ const banana = new Fruit({
     review: 'Weird texture!'
 });
 
-Fruit.insertMany([kiwi, orange, banana], function(error, document){
+Fruit.insertMany([apple, kiwi, orange, banana], function(error){
     if(error){
         console.log(error);
     } else {
         console.log('New entries are added to the database!');
+    }
+});
+
+// Read the fruits collection
+Fruit.find(function(err, fruits){
+    if(err){
+        console.log(err);
+    } else {
+        console.log(fruits);
     }
 });
