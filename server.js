@@ -98,7 +98,7 @@ const dataToInsert = [apple, kiwi, orange, banana];
 // Method:1
 // Without async-await
 
-//Comment this if you're using Method 1
+//Comment this if you're using Method 2
 // ====================================
 insertData(dataToInsert).then(() =>
   findData()
