@@ -1,8 +1,5 @@
 const mongoose = require("mongoose");
 
-const { Fruit } = require("./schema/FruitSchema");
-const { People } = require("./schema/PeopleSchema");
-
 main().catch((err) => console.log(err));
 
 // This section means connect to mongodb and create fruitsDB database inside that
@@ -10,16 +7,23 @@ async function main() {
   await mongoose.connect("mongodb://localhost:27017/fruitsDB");
 }
 
-//  MongoDB will automatically pluralize the collection name
-// const fruit = new Fruit({
-//     name: 'Apple',
-//     rating: 7,
-//     review: 'Pretty solid as fruit!'
-// });
+// ===============================
+// Schema building
+const fruitSchema = new mongoose.Schema({
+  name: String,
+  rating: Number,
+  review: String,
+});
 
-// Comment out this section to prevent mongoose to
-// save fruit to fruits collection everytime you run server.js
-// fruit.save();
+const Fruit = mongoose.model("Fruit", fruitSchema);
+
+const peopleSchema = new mongoose.Schema({
+  name: String,
+  age: Number,
+});
+
+const People = mongoose.model("People", peopleSchema);
+// ===============================
 
 // ===============================
 // Create People Object
@@ -61,7 +65,6 @@ const banana = new Fruit({
 
 // ===============================
 // mongo operation functions
-
 const insertData = (dataToInsert) => {
   return new Promise((res, rej) => {
     Fruit.insertMany(dataToInsert, function (error) {
@@ -94,16 +97,28 @@ const dataToInsert = [apple, kiwi, orange, banana];
 
 // Method:1
 // Without async-await
-insertData(dataToInsert).then(() => {
-  findData().then((data) => console.log("Fruits by Method 1", data));
-});
+
+//Comment this if you're using Method 1
+// ====================================
+insertData(dataToInsert).then(() =>
+  findData()
+    .then((data) => console.log("Fruits by Method 1", data))
+    .catch((err) => console.error(err))
+);
+// ====================================
 
 //Method:2
 //With async-await
+
+//Comment this if you're using Method 1
+// ====================================
 const myFunction = async () => {
-  await insertData(dataToInsert);
-  const fruits = await findData();
-  console.log("Fruits by Method 2", fruits);
+  try {
+    await insertData(dataToInsert);
+    const fruits = await findData();
+    console.log("Fruits by Method 2", fruits);
+  } catch (error) {}
 };
 
 myFunction();
+// ====================================
