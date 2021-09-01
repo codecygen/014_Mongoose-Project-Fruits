@@ -64,19 +64,22 @@ const banana = new Fruit({
     review: 'Weird texture!'
 });
 
-Fruit.insertMany([apple, kiwi, orange, banana], function(error){
-    if(error){
-        console.log(error);
-    } else {
-        console.log('New entries are added to the database!');
-    }
-});
+async function myFunc() {
+    await Fruit.insertMany([apple, kiwi, orange, banana], function (error) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('New entries are added to the database!');
 
-// Read the fruits collection
-Fruit.find(function(err, fruits){
-    if(err){
-        console.log(err);
-    } else {
-        console.log(fruits);
-    }
-});
+            Fruit.find(function (err, fruits) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log(fruits);
+                }
+            });
+        }
+    });
+    
+}
+myFunc();
