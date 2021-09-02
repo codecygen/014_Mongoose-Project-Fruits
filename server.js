@@ -73,7 +73,7 @@ const insertData = (dataToInsert) => {
         rej("Error");
       } else {
         console.log("New entries are added to the database!");
-        res("Success");
+        res();
       }
     });
   });
@@ -86,7 +86,7 @@ const findData = () => {
         console.log(err);
         rej([]);
       } else {
-        console.log(fruits);
+        console.log('New entries found!');
         res(fruits);
       }
     });
@@ -100,11 +100,11 @@ const dataToInsert = [apple, kiwi, orange, banana];
 
 //Comment this if you're using Method 2
 // ====================================
-insertData(dataToInsert).then(() =>
-  findData()
-    .then((data) => console.log("Fruits by Method 1", data))
-    .catch((err) => console.error(err))
-);
+// insertData(dataToInsert).then(() =>
+//   findData()
+//     .then((data) => console.log("Fruits by Method 1", data))
+//     .catch((err) => console.error(err))
+// );
 // ====================================
 
 //Method:2
@@ -116,7 +116,15 @@ const myFunction = async () => {
   try {
     await insertData(dataToInsert);
     const fruits = await findData();
-    console.log("Fruits by Method 2", fruits);
+
+    console.log(fruits);
+
+    fruits.forEach(fruit => {
+      console.log(fruit.name);
+    });
+
+    mongoose.connection.close();
+    
   } catch (error) {}
 };
 
