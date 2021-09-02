@@ -10,8 +10,19 @@ async function main() {
 // ===============================
 // Schema building
 const fruitSchema = new mongoose.Schema({
-  name: String,
-  rating: Number,
+  // Instead of writing just name: String, we use validator(s) here.
+  name: {
+    type: String,
+    required: [true, 'No name is specified!']
+  },
+
+  // Instead of writing just rating: Number, we use validator(s) here.
+  rating: {
+    type: Number,
+    min: 1,
+    max: 10
+  },
+
   review: String,
 });
 
