@@ -90,6 +90,20 @@ const insertData = (dataToInsert) => {
   });
 };
 
+const updateData = () => {
+  return new Promise((res, rej) => {
+    Fruit.updateOne({ name: 'Banana' }, { name: 'Mongo' }, err => {
+      if(err){
+        console.error(err);
+        rej('Error');
+      } else {
+        console.log('Name Banana changed to Mongo!');
+        res();
+      }
+    });
+  });
+};
+
 const findData = () => {
   return new Promise((res, rej) => {
     Fruit.find(function (err, fruits) {
@@ -126,6 +140,7 @@ const dataToInsert = [apple, kiwi, orange, banana];
 const myFunction = async () => {
   try {
     await insertData(dataToInsert);
+    await updateData();
     const fruits = await findData();
 
     console.log(fruits);
@@ -140,4 +155,3 @@ const myFunction = async () => {
 };
 
 myFunction();
-// ====================================
