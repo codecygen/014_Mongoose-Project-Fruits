@@ -45,6 +45,17 @@ const people = new People({
 
 people.save();
 
+// This deletes all names that is entered as John. I did not write
+// async function here thatswhy it first deletes everything and then adds
+// new data. So one line of peoples collection is seen in the end.
+People.deleteMany({ name: 'John' }, (err) => {
+  if(err){
+    console.error(err);
+  } else {
+    console.log('Data deleted from people collection!');
+  }
+});
+
 // ===============================
 
 // ===============================
@@ -76,6 +87,8 @@ const banana = new Fruit({
 
 // ===============================
 // mongo operation functions
+
+// Add 4 fruits. Apple, Kiwi, Orange and Banana.
 const insertData = (dataToInsert) => {
   return new Promise((res, rej) => {
     Fruit.insertMany(dataToInsert, function (error) {
@@ -90,6 +103,7 @@ const insertData = (dataToInsert) => {
   });
 };
 
+// Update a name. Change name of Banana to Mongo.
 const updateData = () => {
   return new Promise((res, rej) => {
     Fruit.updateOne({ name: 'Banana' }, { name: 'Mongo' }, err => {
@@ -104,6 +118,22 @@ const updateData = () => {
   });
 };
 
+// Delete a name. Delete Orange.
+const deleteData = () => {
+  return new Promise((res, rej) => {
+    Fruit.deleteOne({ name: 'Orange' }, err => {
+      if(err){
+        console.error(err);
+        rej('Error');
+      } else {
+        console.log('Name Orange deleted!');
+        res();
+      }
+    });
+  });
+};
+
+// Find the database entry.
 const findData = () => {
   return new Promise((res, rej) => {
     Fruit.find(function (err, fruits) {
@@ -141,6 +171,7 @@ const myFunction = async () => {
   try {
     await insertData(dataToInsert);
     await updateData();
+    await deleteData();
     const fruits = await findData();
 
     console.log(fruits);
