@@ -31,6 +31,7 @@ const Fruit = mongoose.model("Fruit", fruitSchema);
 const peopleSchema = new mongoose.Schema({
   name: String,
   age: Number,
+  // relationship added in between peopleSchema and fruitSchema
   favoriteFruit: fruitSchema
 });
 
