@@ -31,19 +31,13 @@ const Fruit = mongoose.model("Fruit", fruitSchema);
 const peopleSchema = new mongoose.Schema({
   name: String,
   age: Number,
+  favoriteFruit: fruitSchema
 });
 
 const People = mongoose.model("People", peopleSchema);
 // ===============================
 
 // ===============================
-// Create People Object
-const people = new People({
-  name: "John",
-  age: 37,
-});
-
-people.save();
 
 // This deletes all names that is entered as John. I did not write
 // async function here thatswhy it first deletes everything and then adds
@@ -83,6 +77,15 @@ const banana = new Fruit({
   rating: 3,
   review: "Weird texture!",
 });
+
+// Create People Object
+const people = new People({
+  name: "John",
+  age: 37,
+  favoriteFruit: apple
+});
+
+people.save();
 // ===============================
 
 // ===============================
